@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Registration</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>User Registration</h1>
+      <form id="registrationForm">
+        <div>
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required />
+        </div>
+        <div>
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+        <button type="submit">Register</button>
+      </form>
+
+      <div id="qrCodeSection" style="display: none">
+        <h2>Scan this QR Code in Google Authenticator</h2>
+        <img id="qrCodeImage" src="" alt="QR Code" />
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          const response = await fetch("/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            document.getElementById("qrCodeImage").src = data.qrCodeData;
+            document.getElementById("qrCodeSection").style.display = "block";
+          } else {
+            alert(data.message);
+          }
+        });
+    </script>
+  </body>
+</html>
