@@ -2,57 +2,66 @@
 
 ## Overview
 
-This project is a custom-built SMTP service with TOTP-based authentication using Google Authenticator. It uses MongoDB for persistent storage and Redis as a caching layer.
+This project is a custom-built SMTP service featuring TOTP-based authentication using Google Authenticator. It leverages MongoDB for persistent storage and Redis as a caching layer to improve performance.
 
 ## Features
 
-- **SMTP Server**: Handles email sending and receiving.
-- **TOTP Authentication**: Secure user login with 2FA using Google Authenticator.
+- **SMTP Server**: Handles email sending and receiving with SSL/TLS security.
+- **TOTP Authentication**: Implements 2FA using Google Authenticator.
 - **Redis Caching**: Speeds up user lookup and reduces MongoDB load.
 - **MongoDB Storage**: Stores registered users securely.
 
 ## Setup
 
-1. **Clone the repo:**
+1. **Clone the repository:**
 
    ```bash
    git clone <repository-url>
-   cd <repository-directory>
+   cd <repository-directory>`
+
    ```
 
 2. **Install dependencies:**
-
-   ```bash
-   npm install
-   ```
-
+   `npm install`
 3. **Create a `.env` file:**
 
-   ```env
-   DB_URI=mongodb://localhost:27017/smtp_service
-   REDIS_URL=redis://localhost:6379
-   REDIS_PASSWORD=your_redis_password
-   ```
+   `DB_URI=mongodb://localhost:27017/smtp_service`
+
+   `REDIS_URL=redis://localhost:6379 `
+
+   `REDIS_PASSWORD=your_redis_password `
 
 4. **Start the server:**
 
-   ```bash
-   node server.js
-   ```
+   `node src/server/index.js`
 
 ## Usage
 
-1. Register a user and get the TOTP QR code.
-2. Authenticate using username, password, and TOTP token.
+1.  **Register a user**: Register a new user and get the TOTP QR code for Google Authenticator.
+2.  **Authenticate**: Log in using the username, password, and TOTP token.
 
 ## Folder Structure
 
-- **src/config**: Configuration files (MongoDB, Redis).
-- **src/controllers**: User registration and authentication logic.
-- **src/models**: MongoDB models.
-- **src/routes**: API routes.
-- **src/utils**: Utility functions.
+markdown
+
+Copy code
+
+project-root/
+│
+├── src/
+│ ├── config/ # Configuration files (MongoDB, Redis)
+│ ├── controllers/ # Application logic (auth, SMTP)
+│ ├── models/ # MongoDB models
+│ ├── routes/ # API routes
+│ ├── server/ # Server setup (Express, SMTP)
+│ ├── utils/ # Utility functions (QR code generation)
+│ ├── keys/ # SSL/TLS keys and certificates
+│ └── app.js # Main Express app
+│
+├── .env # Environment variables
+├── package.json # Project metadata and dependencies
+└── README.md # Project documentation
 
 ## Deployment
 
-Deploy the service on AWS using EC2 with Node.js, MongoDB, and Redis.
+Deploy the service on AWS using EC2 with Node.js, MongoDB, and Redis. Ensure proper security and scalability configurations are set up.
